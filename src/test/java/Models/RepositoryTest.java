@@ -3,7 +3,10 @@ package Models;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class RepositoryTest {
     private Repository repository;
@@ -71,5 +74,14 @@ public class RepositoryTest {
         Repository testRepository = new Repository("Test", "TestRepo", RepositoryType.PUBLIC);
         testRepository.addCommit(testCommit2);
         assertEquals(1, testRepository.getNoOfCommits());
+    }
+
+    @Test
+    public void itCanRollback() {
+        assertEquals(2, repository.getNoOfCommits());
+        repository.rollBack("1234abcd");
+        assertEquals(1, repository.getNoOfCommits());
+        assertEquals(testCommit ,repository.getCommitById("1234abcd"));
+        assertNull(repository.getCommitById("4321dcba"));
     }
 }

@@ -1,6 +1,7 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Repository {
     private String name;
@@ -54,5 +55,12 @@ public class Repository {
             }
         }
         return null;
+    }
+
+    public void rollBack(String commitId) {
+        if (this.getCommitById(commitId) != null) {
+            int index = this.commits.indexOf(this.getCommitById(commitId));
+            this.commits = new ArrayList<>(this.commits.subList(0, index +1));
+        }
     }
 }
